@@ -19,11 +19,14 @@ module.exports = {
     migrations: {
       directory: './db/migrations'
     },
+    seeds: {
+      directory: './db/seeds/dev'
+    },
     useNullAsDefault: true
   },
   production: {
     client: 'pg',
-    connection: '',
+    connection: 'postgres://doxhgahmyvigzj:25879c1c06b4af8b4a3a2dc38731c411fc85b93b33ffa98cd42e44e359089375@ec2-54-235-250-38.compute-1.amazonaws.com:5432/damfpjaji1dsnb',
     migrations: {
       directory: './db/migrations'
     },
