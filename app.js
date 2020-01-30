@@ -1,23 +1,28 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+const path = require('path');
+const logger = require('morgan');
 
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
+const database = require('knex')(configuration);
 
 var indexRouter = require('./routes/index');
-var papersRouter = require('./routes/api/v1/papers');
+var forecastRouter = require('./routes/api/v1/forecast');
 
-var app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.set('port', process.env.PORT || 3000);
+app.locals.title = 'Sweater_Weather';
+
 app.use('/', indexRouter);
-app.use('/api/v1/papers', papersRouter);
+app.use('/api/v1/forecast', forecastRouter);
 
 module.exports = app;
