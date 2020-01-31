@@ -1,6 +1,6 @@
 const express = require("express");
 const fetch = require("node-fetch");
-const weather_forecast = require('./helper_methods/current_weather');
+const weather_forecast = require('../../../helper_methods/current_weather');
 const router = express.Router();
 
 const environment = process.env.NODE_ENV || "development";
