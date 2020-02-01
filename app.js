@@ -10,6 +10,7 @@ const database = require('knex')(configuration);
 
 var indexRouter = require('./routes/index');
 var forecastRouter = require('./routes/api/v1/forecast');
+var favoritesRouter = require('./routes/api/v1/favorites');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -24,5 +25,6 @@ app.locals.title = 'Sweater_Weather';
 
 app.use('/', indexRouter);
 app.use('/api/v1/forecast', forecastRouter);
+app.use('/api/v1/favorites', favoritesRouter);
 
 module.exports = app;

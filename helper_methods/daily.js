@@ -2,7 +2,7 @@ function daily(data) {
   return{
     summary: data.summary,
     icon: data.icon,
-    data: data.data.map( hour => {
+    data: data.data.slice(0,7).map( hour => {
       return {
         time: hour.time,
         summary: hour.summary,
