@@ -29,4 +29,24 @@ router.post("/", (req, res) => {
   })
 })
 
+router.get("/", (req, res) => {
+  const user_key = req.body.api_key;
+
+  database("users").where({api_key: user_key}).first()
+  .then(user => {
+    if(user_key != user.api_key){
+      res.status(401).send("Unauthorized")
+    }
+    else{
+      database('locations').where({user_id: user.id}).select()
+      .then((location) => {
+        res.status(200).json(location);
+      })
+      .catch((error) => {
+        res.status(500).json({ error });
+      });
+    }
+  })
+})
+
 module.exports = router;
