@@ -16,14 +16,14 @@ router.get("/", (req, res) => {
   const location = req.query.location;
   const google_url = `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&&key=${google_key}`;
 
-  database("users").where({api_key: user_key})
+  database("users").where({api_key: user_key}).first()
   .then(user => {
-    if(user === null || user === ''){
-      return(console.log("401, No User Found"));
+    if(user_key != user.api_key){
+      res.status(401).send("Unauthorized")
     }
     else{
       if(location === null || location === ''){
-        return(console.log("401, Enter a Valid Locaiton"));
+        res.status(401).send("Enter a Valid Location")
       }
       else{
         fetch(google_url)
@@ -41,7 +41,7 @@ router.get("/", (req, res) => {
             .catch((error) => console.error({ error }))
           }
           else{
-            return(console.log("401, No Weather Data."));
+            res.status(401).send("Forecast Information Could Not Be Found.")
           }
         })
       }
