@@ -7,7 +7,7 @@ const database = require("knex")(configuration);
 
 router.post("/", (req, res) => {
   const user_key = req.body.api_key;
-  const location = req.query.location;
+  const location = req.body.location;
 
   database("users").where({api_key: user_key}).first()
   .then(user => {
@@ -16,7 +16,7 @@ router.post("/", (req, res) => {
     }
     else{
       if(location === null || location === ''){
-        res.status(401).send("Enter a Valid Location")
+        res.status(404).send(" Location Not Found. Please Enter a Valid Location.")
       }
       else{
         database('locations').insert({name: location, user_id: user.id})
