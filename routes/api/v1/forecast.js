@@ -23,7 +23,7 @@ router.get("/", (req, res) => {
     }
     else{
       if(location === null || location === ''){
-        res.status(401).send("Enter a Valid Location")
+        res.status(404).send(" Location Not Found. Please Enter a Valid Location.")
       }
       else{
         fetch(google_url)
