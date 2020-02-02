@@ -1,8 +1,7 @@
 const express = require("express");
-const fetch = require("node-fetch");
 const router = express.Router();
 
-const weather_forecast = require('../../../helper_methods/current_weather');
+const weather_forecast = require('../../../helper_methods/weather_forecast');
 const google_geocoding = require('../../../helper_methods/google_geocoding');
 const darksky_forecast = require('../../../helper_methods/darksky_forecast');
 
