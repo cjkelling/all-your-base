@@ -7,7 +7,7 @@ const database = require("knex")(configuration);
 
 router.post("/", (req, res) => {
   const user_key = req.body.api_key;
-  const location = req.query.location;
+  const location = req.body.location;
 
   database("users").where({api_key: user_key}).first()
   .then(user => {
@@ -16,7 +16,7 @@ router.post("/", (req, res) => {
     }
     else{
       if(location === null || location === ''){
-        res.status(401).send("Enter a Valid Location")
+        res.status(404).send(" Location Not Found. Please Enter a Valid Location.")
       }
       else{
         database('locations').insert({name: location, user_id: user.id})
@@ -25,6 +25,26 @@ router.post("/", (req, res) => {
         })
         .catch(error => {res.status(500).json({ error })});
       }
+    }
+  })
+})
+
+router.get("/", (req, res) => {
+  const user_key = req.body.api_key;
+
+  database("users").where({api_key: user_key}).first()
+  .then(user => {
+    if(user_key != user.api_key){
+      res.status(401).send("Unauthorized")
+    }
+    else{
+      database('locations').where({user_id: user.id}).select()
+      .then((location) => {
+        res.status(200).json(location);
+      })
+      .catch((error) => {
+        res.status(500).json({ error });
+      });
     }
   })
 })
