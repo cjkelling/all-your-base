@@ -83,7 +83,7 @@ router.delete("/", (req, res) => {
       else{
         database('locations').where({name: location, user_id: user.id})
         .then((location) => {
-          return delete(location)
+          delete(location)
         })
         res.status(200).send(`${location} has been removed from your favorites.`)
       }
