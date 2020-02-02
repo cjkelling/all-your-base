@@ -1,6 +1,4 @@
 const currently = require('./currently');
-const hourly = require('./hourly');
-const daily = require('./daily');
 
 class WeatherForecast {
   constructor(location, weather_data){
@@ -11,9 +9,7 @@ class WeatherForecast {
   findForecast(){
     return{
       location: this.location,
-      currently: currently(this.raw_data.currently),
-      hourly: hourly(this.raw_data.hourly),
-      daily: daily(this.raw_data.daily)
+      current_weather: currently(this.raw_data.currently),
     }
   }
 }
