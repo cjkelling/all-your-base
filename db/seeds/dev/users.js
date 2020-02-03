@@ -11,7 +11,7 @@ exports.seed = function(knex) {
         }, 'id')
         .then(user => {
           return knex('locations').insert([
-            { name: 'Northglenn, CO', user_id: user[0] }
+            { name: 'Northglenn,CO', user_id: user[0] }
           ])
         })
         .then(() => console.log('Seeding complete!'))

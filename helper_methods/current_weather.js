@@ -2,7 +2,7 @@ const currently = require('./currently');
 
 class CurrentWeather {
   constructor(location, weather_data){
-    this.location = location;
+    this.location = location.name;
     this.raw_data = weather_data;
   }
 
