@@ -1,8 +1,8 @@
 const currently = require('./currently');
 
-class WeatherForecast {
+class CurrentWeather {
   constructor(location, weather_data){
-    this.location = location;
+    this.location = location.name;
     this.raw_data = weather_data;
   }
 
@@ -14,4 +14,4 @@ class WeatherForecast {
   }
 }
 
-module.exports = WeatherForecast;
+module.exports = CurrentWeather;

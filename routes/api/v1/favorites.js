@@ -42,7 +42,8 @@ router.get("/", (req, res) => {
       res.status(401).send("Unauthorized")
     }
     else{
-      database('locations').where({user_id: user.id}).select()
+      var array = [];
+      var results = database('locations').where({user_id: user.id}).select()
       .then(locations => {
         locations.map(location => {
           google_geocoding(location.name)
@@ -50,7 +51,10 @@ router.get("/", (req, res) => {
             if(lat_long != null && lat_long != ''){
               darksky_forecast(lat_long)
               .then(weather_data => {
-                res.status(200).json((new current_weather(location, weather_data)).findForecast())
+                array.push(new current_weather(location, weather_data).findForecast())
+                if(array.length === locations.length){
+                  res.status(200).json(array)
+                }
               })
               .catch((error) => console.error({ error }))
             }
@@ -81,13 +85,12 @@ router.delete("/", (req, res) => {
         res.status(404).send("Please Enter a Valid Location.")
       }
       else{
-        database('locations').where({name: location, user_id: user.id})
-        .then((location) => {
-          return delete(location)
-        })
-        res.status(200).send(`${location} has been removed from your favorites.`)
-      }
-    };
+        database('locations').where({name: location, user_id: user.id}).del()
+        .then(
+          res.status(200).send(`${location} has been removed from your favorites.`)
+        )
+      };
+    }
   })
   .catch(error => {res.status(500).json( "Location Not Favorited. Please Enter a Valid Location." )});
 })
